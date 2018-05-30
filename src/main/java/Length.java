@@ -19,6 +19,10 @@ public class Length {
         return new Length(value, Unit.inch(value));
     }
 
+    public static Length centimeter(double value) {
+        return new Length(value, Unit.centimeter(value));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

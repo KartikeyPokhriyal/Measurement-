@@ -12,4 +12,12 @@ public class LengthTest {
 
         assertEquals(oneFeet, twelveInch);
     }
+
+    @Test
+    public void checkIfCentimeterAndInchAreEqual() {
+        Length twoCentimeter = Length.centimeter(2);
+        Length pointEightInch = Length.inch(0.8);
+
+        assertEquals(twoCentimeter, pointEightInch);
+    }
 }

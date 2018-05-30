@@ -2,6 +2,7 @@ import java.util.Objects;
 
 public class Unit {
    private static final double FEET_TO_INCHES = 12;
+   private static final double CENTIMETER_TO_INCHES = 0.4;
    private double base_unit;
 
     public Unit (double base_unit) {
@@ -9,14 +10,16 @@ public class Unit {
         this.base_unit = base_unit;
     }
 
-
     public static Unit feet(double value) {
         return new Unit(value * FEET_TO_INCHES);
-
     }
 
     public static Unit inch(double value) {
         return new Unit(value);
+    }
+
+    public static Unit centimeter(double value) {
+        return new Unit(value * CENTIMETER_TO_INCHES);
     }
 
     @Override
