@@ -4,34 +4,48 @@ public class Unit {
    private static final double FEET_TO_INCHES = 12;
    private static final double CENTIMETER_TO_INCHES = 0.4;
    private static final double GALLON_TO_LITRES= 3.785;
+   private static final double F_TO_C= (double) 5/9;
    private final Type type;
 
     private double conversion_factor;
+    private double anotherFactor;
 
-    public Unit( double conversion_factor, Type type) {
+
+    public Unit( double conversion_factor, Type type, double anotherFactor) {
         this.type = type;
         this.conversion_factor = conversion_factor;
+        this.anotherFactor = anotherFactor;
     }
 
     public static Unit feet() {
-        return new Unit(FEET_TO_INCHES, Type.LENGTH);
+        return new Unit(FEET_TO_INCHES, Type.LENGTH, 0);
     }
 
     public static Unit inch() {
-        return new Unit(1, Type.LENGTH);
+        return new Unit(1, Type.LENGTH, 0);
     }
 
     public static Unit centimeter() {
-        return new Unit(CENTIMETER_TO_INCHES, Type.LENGTH);
+        return new Unit(CENTIMETER_TO_INCHES, Type.LENGTH, 0);
     }
 
     public static Unit gallon() {
-        return new Unit(GALLON_TO_LITRES, Type.VOLUME);
+        return new Unit(GALLON_TO_LITRES, Type.VOLUME,0);
     }
 
     public static Unit litre() {
-        return new Unit(1 ,Type.VOLUME);
+        return new Unit(1 ,Type.VOLUME,0);
     }
+
+    public static Unit f() {
+        return new Unit(F_TO_C, Type.TEMPERATURE, 32);
+    }
+
+    public static Unit c() {
+        return new Unit(1, Type.TEMPERATURE, 0);
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -53,11 +67,12 @@ public class Unit {
         return "Unit{" +
                 "type=" + type +
                 ", conversion_factor=" + conversion_factor +
+                ", anotherFactor=" + anotherFactor +
                 '}';
     }
 
     public double convertToBase(double value) {
-        return value * conversion_factor;
+        return (value - anotherFactor) * conversion_factor;
     }
 
     public boolean isCompatible(Unit unit) {

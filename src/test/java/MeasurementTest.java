@@ -8,76 +8,84 @@ public class MeasurementTest {
 
     @Test
     public void checkIfFeetAndInchAreEqual() {
-        Measurement oneFeet = Measurement.feet(1);
-        Measurement twelveInch = Measurement.inch(12);
+        AddableMeasurements oneFeet = AddableMeasurements.feet(1);
+        AddableMeasurements twelveInch = AddableMeasurements.inch(12);
 
         assertEquals(oneFeet, twelveInch);
     }
 
     @Test
     public void checkIfCentimeterAndInchAreEqual() {
-        Measurement twoCentimeter = Measurement.centimeter(2);
-        Measurement pointEightInch = Measurement.inch(0.8);
+        AddableMeasurements twoCentimeter = AddableMeasurements.centimeter(2);
+        AddableMeasurements pointEightInch = AddableMeasurements.inch(0.8);
 
         assertEquals(twoCentimeter, pointEightInch);
     }
 
     @Test
     public void checkIfGallonAndLitreAreEqual() {
-        Measurement oneGallon = Measurement.gallon(1);
-        Measurement pointThreeSevenLitre = Measurement.litre(3.785);
+        AddableMeasurements oneGallon = AddableMeasurements.gallon(1);
+        AddableMeasurements pointThreeSevenLitre = AddableMeasurements.litre(3.785);
 
         assertEquals(oneGallon, pointThreeSevenLitre);
     }
 
     @Test
     public void checkIfThreeGallonAndLitreAreEqual() {
-        Measurement threeGallon = Measurement.gallon(3);
-        Measurement elevenPointThreeLitre = Measurement.litre(11.355);
+        AddableMeasurements threeGallon = AddableMeasurements.gallon(3);
+        AddableMeasurements elevenPointThreeLitre = AddableMeasurements.litre(11.355);
 
         assertEquals(threeGallon, elevenPointThreeLitre);
     }
 
     @Test
     public void shouldNotCompareFeetAndGallon() {
-        Measurement threeGallon = Measurement.gallon(3);
-        Measurement twoFeet = Measurement.feet(2);
+        AddableMeasurements threeGallon = AddableMeasurements.gallon(3);
+        AddableMeasurements twoFeet = AddableMeasurements.feet(2);
 
         assertNotEquals(threeGallon, twoFeet);
     }
 
     @Test
     public void shouldAddOneInchToTwoInchToGiveThreeInches() {
-        Measurement oneInch = Measurement.inch(1);
-        Measurement twoInch = Measurement.inch(2);
-        Measurement threeInch = Measurement.inch(3);
+        AddableMeasurements oneInch = AddableMeasurements.inch(1);
+        AddableMeasurements twoInch = AddableMeasurements.inch(2);
+        AddableMeasurements threeInch = AddableMeasurements.inch(3);
 
         assertEquals(threeInch, oneInch.add(twoInch));
     }
 
     @Test
     public void shouldAddThreeInchToFiveInchToGiveEightInches() {
-        Measurement threeInch = Measurement.inch(3);
-        Measurement fiveInch = Measurement.inch(5);
-        Measurement eightInch = Measurement.inch(8);
+        AddableMeasurements threeInch = AddableMeasurements.inch(3);
+        AddableMeasurements fiveInch = AddableMeasurements.inch(5);
+        AddableMeasurements eightInch = AddableMeasurements.inch(8);
 
         assertEquals(eightInch, threeInch.add(fiveInch));
     }
 
     @Test
     public void shouldAddThreeInchToFiveFeetToGiveEightInches() {
-        Measurement threeInch = Measurement.inch(3);
-        Measurement fiveFeet = Measurement.feet(5);
-        Measurement sixtyThreeInch = Measurement.inch(63);
+        AddableMeasurements threeInch = AddableMeasurements.inch(3);
+        AddableMeasurements fiveFeet = AddableMeasurements.feet(5);
+        AddableMeasurements sixtyThreeInch = AddableMeasurements.inch(63);
 
         assertEquals(sixtyThreeInch, threeInch.add(fiveFeet));
     }
 
     @Test (expected = MeasurementTypeIncompatibleException.class)
     public void shouldThrowExceptionIfLengthAndVolumeAreAdded() {
-        Measurement threeInch = Measurement.inch(3);
-        Measurement fiveGallon = Measurement.gallon(5);
+        AddableMeasurements threeInch = AddableMeasurements.inch(3);
+        AddableMeasurements fiveGallon = AddableMeasurements.gallon(5);
 
         threeInch.add(fiveGallon);
+    }
+
+    @Test
+    public void shouldCompareFarenhietAndCelcius() {
+        Measurement oneCelcius = Measurement.c(40);
+        Measurement thirtyThreePointEight = Measurement.f(104);
+
+        assertEquals(oneCelcius, thirtyThreePointEight);
     }
 }
