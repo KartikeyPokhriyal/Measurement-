@@ -6,57 +6,65 @@ public class Unit {
    private static final double GALLON_TO_LITRES= 3.785;
    private final Type type;
 
-    private double base_unit;
+    private double conversion_factor;
 
-
-
-    public Unit (double base_unit, Type type) {
-        this.base_unit = base_unit;
+    public Unit( double conversion_factor, Type type) {
         this.type = type;
+        this.conversion_factor = conversion_factor;
     }
 
-
-    public static Unit feet(double value) {
-        return new Unit( value * FEET_TO_INCHES, Type.LENGTH);
+    public static Unit feet() {
+        return new Unit(FEET_TO_INCHES, Type.LENGTH);
     }
 
-    public static Unit inch(double value) {
-        return new Unit(value, Type.LENGTH);
+    public static Unit inch() {
+        return new Unit(1, Type.LENGTH);
     }
 
-    public static Unit centimeter(double value) {
-        return new Unit(value * CENTIMETER_TO_INCHES, Type.LENGTH);
+    public static Unit centimeter() {
+        return new Unit(CENTIMETER_TO_INCHES, Type.LENGTH);
     }
 
-    public static Unit gallon(double quantity) {
-        return new Unit(quantity * GALLON_TO_LITRES, Type.VOLUME);
+    public static Unit gallon() {
+        return new Unit(GALLON_TO_LITRES, Type.VOLUME);
     }
 
-    public static Unit litre(double quantity) {
-        return new Unit(quantity, Type.VOLUME);
+    public static Unit litre() {
+        return new Unit(1 ,Type.VOLUME);
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Unit)) return false;
         Unit unit = (Unit) o;
-        if(unit.type != type) return false;
-       return Double.compare(unit.base_unit, base_unit) == 0 ;
+        return Double.compare(unit.conversion_factor, conversion_factor) == 0 &&
+                type == unit.type;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(type, base_unit);
+        return Objects.hash(type, conversion_factor);
     }
 
     @Override
     public String toString() {
         return "Unit{" +
                 "type=" + type +
-                ", base_unit=" + base_unit +
+                ", conversion_factor=" + conversion_factor +
                 '}';
+    }
+
+    public double convertToBase(double value) {
+        return value * conversion_factor;
+    }
+
+    public boolean isCompatible(Unit unit) {
+        return (unit.type == type);
+    }
+
+    public boolean isType(Type length) {
+        return this.type == type;
     }
 }

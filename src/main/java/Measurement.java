@@ -12,31 +12,44 @@ public class Measurement {
     }
 
     public static Measurement feet(double value) {
-         return new Measurement(value,  Unit.feet(value));
+         return new Measurement(value,  Unit.feet());
     }
 
     public static Measurement inch(double value) {
-        return new Measurement(value, Unit.inch(value));
+        return new Measurement(value, Unit.inch());
     }
 
     public static Measurement centimeter(double value) {
-        return new Measurement(value, Unit.centimeter(value));
+        return new Measurement(value, Unit.centimeter());
     }
 
     public static Measurement gallon(double value) {
-        return new Measurement(value, Unit.gallon(value));
+        return new Measurement(value, Unit.gallon());
     }
 
     public static Measurement litre(double value) {
-        return new Measurement(value, Unit.litre(value));
+        return new Measurement(value, Unit.litre());
     }
 
+
+    public Measurement add(Measurement length) throws MeasurementTypeIncompatibleException {
+
+        if (unit.isCompatible(length.unit)) {
+            if (unit.isType(Type.LENGTH))
+                return new Measurement(unit.convertToBase(value) + length.unit.convertToBase(length.value), Unit.inch());
+            else
+                return new Measurement(unit.convertToBase(value) + length.unit.convertToBase(length.value), Unit.litre());
+
+        } else throw new MeasurementTypeIncompatibleException("You cannot add volume and length");
+    }
+
+
     @Override
-    public boolean equals(Object o) throws IllegalArgumentException{
+    public boolean equals(Object o){
         if (this == o) return true;
         if (!(o instanceof Measurement)) return false;
         Measurement measurement = (Measurement) o;
-        return Objects.equals(unit, measurement.unit);
+        return unit.isCompatible(measurement.unit) && Objects.equals(unit.convertToBase(value), measurement.unit.convertToBase(measurement.value));
     }
 
     @Override
